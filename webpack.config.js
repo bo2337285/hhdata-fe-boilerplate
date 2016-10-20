@@ -12,7 +12,12 @@ var BUILD_PATH = path.resolve(ROOT_PATH, 'build');
 
 var webpackConfig = {
   entry: {
-    index : SRC_PATH + "/index.js"
+    index : SRC_PATH + "/index.js",
+    commons: [
+        'babel-polyfill',
+        'react',
+        'react-dom'
+    ]
   },
   output: {
       path: path.join(__dirname, "build"),
@@ -60,9 +65,24 @@ var webpackConfig = {
       chunks: ["index","commons"]
     }),
     new webpack.optimize.CommonsChunkPlugin({
-         filename: "util/commons.js",
-         name: "commons"
-     })
+      name: 'commons',
+      // TODO: set node_modules fallback
+      minChunks: function (module, count) {
+        // any required modules inside node_modules are extracted to vendor
+        return (
+          module.resource &&
+          /\.js$/.test(module.resource) &&
+          module.resource.indexOf(
+            path.join(__dirname, '../node_modules')
+          ) === 0
+        )
+      }
+    })
+    // new webpack.optimize.CommonsChunkPlugin({
+    //      filename: "util/commons.js",
+    //      name: ["commons"],
+    //     //  minChunks:2
+    //  })
   ]
 };
 // 获取指定路径下的入口文件
