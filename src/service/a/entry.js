@@ -1,15 +1,8 @@
-import React, { Component } from 'react'
-export default class Component1 extends Component {
-    componentDidMount() {
-        alert('Welcome to React demos!!!')
-    }
-    render() {
-        return (
-            <div>
-                <h3>DEMO 1, render() and life cycle</h3>
-                <p>Hello World!</p>
-                <hr/>
-            </div>
-        )
-    }
-}
+// import common from '/src/util/js/common'
+import React from 'react';
+import {render} from 'react-dom';
+
+render(
+  <h1>----</h1>,
+  document.getElementById('app')
+);

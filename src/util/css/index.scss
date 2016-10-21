@@ -1,7 +1,34 @@
+//sass style
+//-----------------------------------
+// _util.scss
+
+@import 'util';
+
+html,body{
+  margin: 0;
+  padding: 0;
+  position: relative;
+  @include fill-full();
+}
 body {
   background: #eee;
   font-size:12px;
+  overflow: hidden;
 }
 .aa{
   background-color: red;
+}
+.content{
+  position: absolute;
+  top: 64px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+.content-iframe{
+  margin: 0;
+  padding: 0;
+  position: relative;
+  border: none;
+  @include fill-full();
 }

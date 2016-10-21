@@ -47,11 +47,20 @@ var webpackConfig = {
       ]
   },
   resolve:{
-      extensions:['','.js','.json']
+      root: [
+        "src/"
+      ],
+      extensions:['','.js','.json'],
+      alias: {
+        src: "aaa"
+      }
   },
   devServer: {
       hot: true,
       inline: true
+  },
+  babel: {
+      presets: ['es2015', 'stage-1', 'react']
   },
   plugins: [
     new webpack.NoErrorsPlugin(),
@@ -78,11 +87,6 @@ var webpackConfig = {
         )
       }
     })
-    // new webpack.optimize.CommonsChunkPlugin({
-    //      filename: "util/commons.js",
-    //      name: ["commons"],
-    //     //  minChunks:2
-    //  })
   ]
 };
 // 获取指定路径下的入口文件
@@ -117,7 +121,7 @@ Object.keys(entries).forEach(function(name) {
         // 自动将引用插入html
         inject: true,
         // 每个html引用的js模块，也可以在这里加上vendor等公用模块
-        chunks: [name]
+        chunks: [name,"commons"]//公用模块commons必须引入!
     });
     webpackConfig.plugins.push(plugin);
 })

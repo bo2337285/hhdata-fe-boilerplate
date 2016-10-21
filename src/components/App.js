@@ -6,6 +6,7 @@ import MenuItem from 'material-ui/MenuItem';
 import AppBar from 'material-ui/AppBar';
 import Header from './Header';
 import Nav from './Nav';
+import Content from './Content';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
 
@@ -30,6 +31,10 @@ export default class App extends React.Component {
           open={this.state.open}
           onRequestChange={(open) => {this.setState({open})}}
           />
+        <Content
+          itemKey="aaa"
+          url="./service/a/index.html"
+        />
       </div>
     );
   }
