@@ -63,13 +63,13 @@ var webpackConfig = {
     new webpack.NoErrorsPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new ExtractTextPlugin('css/[name].css'),
-    // new HtmlWebpackPlugin({
-    //   title : "index",
-    //   filename : "index.html",
-    //   template: 'src/tmpl/index.html',
-    //   inject: true,
-    //   chunks: ["index","commons"]
-    // }),
+    new HtmlWebpackPlugin({
+      title : "index",
+      filename : "index.html",
+      template: 'src/tmpl/index.html',
+      inject: true,
+      chunks: ["index","commons"]
+    }),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'commons',
       // TODO: set node_modules fallback
