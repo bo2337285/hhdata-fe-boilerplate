@@ -12,7 +12,7 @@ var BUILD_PATH = path.resolve(ROOT_PATH, 'build');
 
 var webpackConfig = {
   entry: {
-    index : SRC_PATH + "/index.js",
+    // index : SRC_PATH + "/index.js",
     commons: [
         'babel-polyfill',
         'react',
@@ -47,12 +47,9 @@ var webpackConfig = {
       ]
   },
   resolve:{
-      root: [
-        "src/"
-      ],
       extensions:['','.js','.json'],
       alias: {
-        src: "aaa"
+        svc2Src: "../../",//service目录重置回src目录
       }
   },
   devServer: {
@@ -66,13 +63,13 @@ var webpackConfig = {
     new webpack.NoErrorsPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new ExtractTextPlugin('css/[name].css'),
-    new HtmlWebpackPlugin({
-      title : "index",
-      filename : "index.html",
-      template: 'src/tmpl/index.html',
-      inject: true,
-      chunks: ["index","commons"]
-    }),
+    // new HtmlWebpackPlugin({
+    //   title : "index",
+    //   filename : "index.html",
+    //   template: 'src/tmpl/index.html',
+    //   inject: true,
+    //   chunks: ["index","commons"]
+    // }),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'commons',
       // TODO: set node_modules fallback
