@@ -36,14 +36,20 @@ var webpackConfig = {
                 presets:['react','es2015']
               }
           },
-           {
-              test: /\.scss$/,
-              loaders: ['style', 'css', 'sass'],
-              include: SRC_PATH
-          }, {
-              test: /\.(png|jpg)$/,
-              loader: 'url?limit=40000'
-          }
+          //css 单独打包
+          { test: /\.scss$/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader!sass-loader') },
+          { test: /\.css$/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader') },
+          //图片文件使用 url-loader 来处理，小于8kb的直接转为base64
+          { test: /\.(png|jpg)$/, loader: 'url-loader?limit=8192'}
+          //  {
+          //     test: /\.scss$/,
+          //     loaders: ['style', 'css', 'sass'],
+          //     include: SRC_PATH
+          // },
+          // {
+          //     test: /\.(png|jpg)$/,
+          //     loader: 'url?limit=40000'
+          // }
       ]
   },
   resolve:{
@@ -63,6 +69,10 @@ var webpackConfig = {
     new webpack.NoErrorsPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new ExtractTextPlugin('css/[name].css'),
+    // 全局变量
+    new webpack.DefinePlugin({
+        __DEBUG__: JSON.stringify(JSON.parse('true')), // 开发调试时把它改为true
+    }),
     new HtmlWebpackPlugin({
       title : "index",
       filename : "index.html",
@@ -106,21 +116,23 @@ function getEntries(globPath) {
 var entries = getEntries('src/service/**/entry.js');
 
 Object.keys(entries).forEach(function(name) {
+  if(!webpackConfig.entry[name]){//存在的入口不再打包
     // 每个页面生成一个entry，如果需要HotUpdate，在这里修改entry
     webpackConfig.entry[name] = entries[name];
 
     // 每个页面生成一个html
     var plugin = new HtmlWebpackPlugin({
-        // 生成出来的html文件名
-        filename: 'service/'+name + '/index.html',
-        // 每个html的模版，这里多个页面使用同一个模版
-        template: 'src/tmpl/entry.html',
-        // 自动将引用插入html
-        inject: true,
-        // 每个html引用的js模块，也可以在这里加上vendor等公用模块
-        chunks: [name,"commons"]//公用模块commons必须引入!
+      // 生成出来的html文件名
+      filename: 'service/'+name + '/index.html',
+      // 每个html的模版，这里多个页面使用同一个模版
+      template: 'src/tmpl/entry.html',
+      // 自动将引用插入html
+      inject: true,
+      // 每个html引用的js模块，也可以在这里加上vendor等公用模块
+      chunks: [name,"commons"]//公用模块commons必须引入!
     });
     webpackConfig.plugins.push(plugin);
+  }
 })
 
 module.exports = webpackConfig;

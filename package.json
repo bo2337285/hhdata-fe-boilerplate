@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --hot --progress --colors --port 3000",
-    "build": "webpack --progress --colors",
-    "dev": "node ./dev-server.js"
+    "build": "rimraf build && webpack --progress --colors",
+    "dev": "node ./dev-server.js",
+    "clear": "rimraf build"
   },
   "author": "bo",
   "license": "ISC",
@@ -44,6 +45,8 @@
     "log4js": "^0.6.38",
     "react-redux": "^4.4.5",
     "redux": "^3.5.2",
-    "webpack-dev-middleware": "^1.8.3"
+    "webpack-dev-middleware": "^1.8.3",
+    "rimraf": "^2.5.4",
+    "redux-thunk": "^2.1.0"
   }
 }

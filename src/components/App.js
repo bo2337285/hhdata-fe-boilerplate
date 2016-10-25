@@ -9,27 +9,53 @@ import Nav from './Nav';
 import Content from './Content';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
+import { connect } from 'react-redux'
+import { toggleMenu } from '../service/index/actions'
+
 
 injectTapEventPlugin();
 
-export default class App extends React.Component {
-  constructor (props) {
-    super(props);
-    this.state = {open: false};
+const mapStateToProps = (state, ownProps) => {
+  return {
+    open: state.open
   }
+}
 
-  handleToggle () {
-    this.setState({open: !this.state.open})
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    onClick: () => {
+      dispatch(toggleMenu(false))
+    },
+    onChange: () =>{
+      dispatch(toggleMenu(true))
+    }
   }
+}
+
+export default connect(
+  mapStateToProps,mapDispatchToProps
+)(class App extends React.Component {
+  // constructor (props) {
+  //   super(props);
+  //   // this.state = {open: false};
+  // }
+
+  // handleToggle () {
+  //   this.props.dispatch(toggleMenu(true));
+  //   // this.setState({open: !this.state.open})
+  // }
 
   render() {
     return (
       <div>
         <Header
-          onLeftIconButtonTouchTap={this.handleToggle.bind(this)}/>
+          // onLeftIconButtonTouchTap={this.handleToggle.bind(this)}
+          onLeftIconButtonTouchTap={this.props.onClick}
+        />
         <Nav
-          open={this.state.open}
-          onRequestChange={(open) => {this.setState({open})}}
+          open={this.props.open}
+          // onRequestChange={(open) => {this.setState({open})}}
+          onRequestChange={this.props.onChange}
           />
         <Content
           itemKey="aaa"
@@ -40,3 +66,4 @@ export default class App extends React.Component {
   }
 
 }
+)
