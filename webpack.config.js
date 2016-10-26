@@ -69,12 +69,11 @@ var webpackConfig = {
     new webpack.NoErrorsPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new ExtractTextPlugin('css/[name].css'),
-    // 全局变量
     new webpack.DefinePlugin({
-        __DEBUG__: JSON.stringify(JSON.parse('true')), // 开发调试时把它改为true
+      __DEBUG__: JSON.stringify(JSON.parse('true')), // 开发调试时把它改为true
     }),
     new HtmlWebpackPlugin({
-      title : "index",
+      title : "demo系统",
       filename : "index.html",
       template: 'src/tmpl/index.html',
       inject: true,

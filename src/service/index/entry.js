@@ -3,18 +3,32 @@ import {render} from 'react-dom';
 import App from 'svc2Src/components/app';
 import common from 'svc2Src/util/js/common';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
-import reducer from './reducer';
+import { createStore, compose } from 'redux';
+import reducer from './reducers';
+import DevTools from 'svc2Src/util/js/DevTools'
 
 
 require('svc2Src/util/css/index.scss');
 
-let store = createStore(reducer);
+// 把多个 store 增强器从右到左来组合起来，依次执行
+// 这个地方完全可以不用compose，演示一下compose的使用
+const enhancer = compose(
+  DevTools.instrument()
+);
+let store;
+if (__DEBUG__) {
+  store = createStore(reducer,enhancer);
+}else {
+  store = createStore(reducer);
+}
 
 render(
   <div>
     <Provider store={store}>
-      <App />
+      <div>
+        <App />
+        <DevTools />
+      </div>
     </Provider>
   </div>
   ,
