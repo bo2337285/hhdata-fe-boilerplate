@@ -9,6 +9,7 @@ export default class Nav extends React.Component {
   }
 
   render() {
+    let props = this.props;
     return (
       <div>
         <MuiThemeProvider>
@@ -16,9 +17,18 @@ export default class Nav extends React.Component {
             docked={false}
             width={200}
             open={this.props.open}
-            onRequestChange={this.props.onRequestChange}>
-          <MenuItem>菜单0</MenuItem>
-          <MenuItem>菜单1</MenuItem>
+            onRequestChange={this.props.onRequestChange}
+            >
+            {
+              props.items.map(item =>
+              <MenuItem
+                id={item.id}
+                key={item.id}
+                onTouchTap={() => props.onItemClick(item)}
+                >
+                {item.name}
+              </MenuItem>
+            )}
           </Drawer>
         </MuiThemeProvider>
       </div>
