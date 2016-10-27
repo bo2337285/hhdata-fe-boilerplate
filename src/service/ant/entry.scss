@@ -13,3 +13,72 @@
   height: 100%;
   transition: left 0.2s ease-out, top 0.2s ease-out, width 0.2s ease-out, height 0.2s ease-out;
 }
+.bodyDiv{
+  position: relative;
+  height:calc(100% - 43px);
+  width: 100%;
+}
+.cotainerDiv{
+  position: relative;
+  flex :1;
+  height:100%;
+  margin-left: 240px;
+  transition:all .3s;
+  background:#ccc;
+}
+.navDiv{
+  position: absolute;
+  display:inline-block;
+  width: 240px;
+  height:100%;
+  float:left;
+  transition:all .3s;
+}
+.headerDiv{
+  height:40px;
+  line-height:40px;
+  background-color: #70CEF8;
+  color: white;
+}
+.headerDiv .right-area{
+  text-align: center;
+}
+.headerDiv .left-area {
+    width: 240px;
+    float: left;
+    position: relative;
+    border-right: 1px solid #246bae;
+    height:100%;
+}
+.headerDiv .nav-toggle {
+    float: left;
+    height: 41px;
+    line-height: 41px;
+    width: 42px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.headerDiv .nav-toggle a.banner-icon {
+    width: 17px;
+    background-position: 0 -3px;
+}
+.headerDiv a.banner-icon {
+    display: inline-block;
+    height: 18px;
+    color: #fff;
+    width: 18px;
+    text-align: center;
+    cursor: pointer;
+    vertical-align: middle;
+    background: url(./top-banner-icon.png) no-repeat 0 0;
+}
+iframe{
+  height: 100%;
+  width: 100%;
+  border: none;
+}
+iframe>html{
+  height:100%;
+  width: 100%;
+}

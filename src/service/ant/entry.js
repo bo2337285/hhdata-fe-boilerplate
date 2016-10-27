@@ -1,6 +1,6 @@
 import React from 'react';
 import {render} from 'react-dom';
-import App from 'svc2Src/components/ant-cpm/App-ant';
+import App from './App';
 import common from 'svc2Src/util/js/common';
 import { Provider } from 'react-redux';
 import { createStore, compose } from 'redux';
