@@ -30,11 +30,11 @@ var webpackConfig = {
             test: /\.js$/,
             exclude: /node_modules/,
             loader: "babel-loader",
-            include: /src/,
-            query:
-              {
-                presets:['react','es2015']
-              }
+            include: /src/
+            // query:
+            //   {
+            //     presets:["es2015", "stage-3","react"]
+            //   }
           },
           //css 单独打包
           { test: /\.scss$/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader!sass-loader') },
@@ -63,7 +63,7 @@ var webpackConfig = {
       inline: true
   },
   babel: {
-      presets: ['es2015', 'stage-1', 'react']
+      presets: ['es2015', 'stage-3', 'react']
   },
   plugins: [
     new webpack.NoErrorsPlugin(),

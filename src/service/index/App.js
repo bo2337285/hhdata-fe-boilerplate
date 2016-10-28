@@ -9,16 +9,17 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 
 injectTapEventPlugin();
 
-let items = [
-  {id:0,name:"百度",url:"www.baidu.com"},
-  {id:1,name:"新浪",url:"www.sina.com"},
-]
+// let items = [
+//   {id:0,name:"a",url:"service/a/index.html"},
+//   {id:1,name:"b",url:"service/b/index.html"},
+// ]
 
 const mapStateToProps = (state, ownProps) => {
   return {
     open: state.open,
-    items: state.items || items,
-    currItem: state.currItem || items[0]
+    nText: state.nText,
+    items: state.items,
+    currItem: state.currItem
   }
 }
 
@@ -29,6 +30,11 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 export default connect(
   mapStateToProps,mapDispatchToProps
 )(class App extends React.Component {
+  constructor (props) {
+    super(props);
+    // this.props.changeBtnTextWithTimeout("start");
+    this.props.getMenu();
+  }
   render() {
     return (
       <div>
@@ -39,11 +45,11 @@ export default connect(
           open={this.props.open}
           onRequestChange={this.props.menuClose}
           onItemClick={this.props.onItemClick}
-          items = {this.props.items}
+          items = {this.props.items||[]}
           />
         <Content
-          itemKey={this.props.currItem.id}
-          url={"http://"+this.props.currItem.url}
+          itemKey={this.props.currItem?this.props.currItem.id:""}
+          url={this.props.currItem?this.props.currItem.url:""}
         />
       </div>
     );

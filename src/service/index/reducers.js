@@ -1,6 +1,8 @@
 export default (
   state = {
-    open:false
+    open:false,
+    nText:"test",
+    items:[]
   },
    action) => {
   switch (action.type) {
@@ -20,6 +22,14 @@ export default (
     return Object.assign({}, state, {
         currItem: action.item,
         open: false
+      });
+    case 'CHANGE_BTN_TEXT':
+    return Object.assign({}, state, {
+        nText: action.text
+      });
+    case 'GET_MENU':
+    return Object.assign({}, state, {
+        items: action.data
       });
     default:
     return {
