@@ -10,6 +10,9 @@ var ROOT_PATH = path.resolve(__dirname);
 var SRC_PATH = path.resolve(ROOT_PATH, 'src');
 var BUILD_PATH = path.resolve(ROOT_PATH, 'build');
 
+var publicPath = 'http://localhost:3000/';
+var hotMiddlewareScript = 'webpack-hot-middleware/client?reload=true';
+
 var webpackConfig = {
   entry: {
     // index : SRC_PATH + "/index.js",
@@ -56,6 +59,7 @@ var webpackConfig = {
       extensions:['','.js','.json'],
       alias: {
         svc2Src: "../../",//service目录重置回src目录
+        cpm2Src: "../",//service目录重置回src目录
       }
   },
   devServer: {
@@ -68,12 +72,13 @@ var webpackConfig = {
   plugins: [
     new webpack.NoErrorsPlugin(),
     new webpack.HotModuleReplacementPlugin(),
+    new webpack.optimize.OccurenceOrderPlugin(),
     new ExtractTextPlugin('css/[name].css'),
     new webpack.DefinePlugin({
       __DEBUG__: JSON.stringify(JSON.parse('true')), // 开发调试时把它改为true
     }),
     new HtmlWebpackPlugin({
-      title : "demo系统",
+      title : "Wfp-Basic-Dev-Framework",
       filename : "index.html",
       template: 'src/tmpl/index.html',
       inject: true,
@@ -117,7 +122,8 @@ var entries = getEntries('src/service/**/entry.js');
 Object.keys(entries).forEach(function(name) {
   if(!webpackConfig.entry[name]){//存在的入口不再打包
     // 每个页面生成一个entry，如果需要HotUpdate，在这里修改entry
-    webpackConfig.entry[name] = entries[name];
+    webpackConfig.entry[name] = [entries[name],hotMiddlewareScript];
+    // webpackConfig.entry[name] = entries[name];
 
     // 每个页面生成一个html
     var plugin = new HtmlWebpackPlugin({

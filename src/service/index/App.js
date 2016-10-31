@@ -17,7 +17,6 @@ injectTapEventPlugin();
 const mapStateToProps = (state, ownProps) => {
   return {
     open: state.open,
-    nText: state.nText,
     items: state.items,
     currItem: state.currItem
   }
@@ -32,7 +31,6 @@ export default connect(
 )(class App extends React.Component {
   constructor (props) {
     super(props);
-    // this.props.changeBtnTextWithTimeout("start");
     this.props.getMenu();
   }
   render() {
