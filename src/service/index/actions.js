@@ -22,14 +22,6 @@ export const onItemClick = (item) => {
   }
 }
 
-
-// const sleep =  function (time) {
-//     return new Promise(function (resolve, reject) {
-//         setTimeout(function () {
-//             resolve();
-//         }, time);
-//     })
-// };
 export const getMenu = () => {
   return async (dispatch) => {
 
@@ -40,6 +32,7 @@ export const getMenu = () => {
     }).then((res)=>res.json())
 
     dispatch({type: 'GET_MENU',data:msg.data })
+    dispatch({type: 'ITEM_CLICK',item:msg.data[0] })
   }
 }
 
@@ -48,7 +41,7 @@ export const changeBtnTextWithTimeout = (text) => {
     // await sleep(3000);
     let res = await fetch('data/aa',{
       method: 'POST',
-      body: {"aa":"aa"}
+      body: JSON.stringify({"aa":"aa"})
     })
     let data = await res.json();
     console.log(data);
