@@ -10,7 +10,7 @@ var ROOT_PATH = path.resolve(__dirname);
 var SRC_PATH = path.resolve(ROOT_PATH, 'src');
 var BUILD_PATH = path.resolve(ROOT_PATH, 'build');
 
-var publicPath = 'http://localhost:3000/';
+var publicPath = 'http://localhost:3000/';//解决静态资源路径问题的绝对路径
 var hotMiddlewareScript = 'webpack-hot-middleware/client?reload=true';
 
 var webpackConfig = {
@@ -25,7 +25,8 @@ var webpackConfig = {
   output: {
       path: path.join(__dirname, "build"),
       filename: "service/[name]/bundle.js",
-      chunkFilename: "[id].chunk.js"
+      chunkFilename: "[id].chunk.js",
+      // publicPath: publicPath //解决静态资源路径问题的绝对路径
   },
   module: {
       loaders: [
@@ -34,25 +35,13 @@ var webpackConfig = {
             exclude: /node_modules/,
             loader: "babel-loader",
             include: /src/
-            // query:
-            //   {
-            //     presets:["es2015", "stage-3","react"]
-            //   }
           },
           //css 单独打包
           { test: /\.scss$/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader!sass-loader') },
           { test: /\.css$/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader') },
           //图片文件使用 url-loader 来处理，小于8kb的直接转为base64
-          { test: /\.(png|jpg)$/, loader: 'url-loader?limit=8192'}
-          //  {
-          //     test: /\.scss$/,
-          //     loaders: ['style', 'css', 'sass'],
-          //     include: SRC_PATH
-          // },
-          // {
-          //     test: /\.(png|jpg)$/,
-          //     loader: 'url?limit=40000'
-          // }
+          { test: /\.(png|jpg|gif|jpeg)$/, loader: 'url-loader?limit=8192&name=util/img/[hash:8].[name].[ext]'}
+          // { test: /\.(png|jpg|gif|jpeg)$/, loader: 'url-loader?limit=8192'}
       ]
   },
   resolve:{
@@ -66,14 +55,11 @@ var webpackConfig = {
       hot: true,
       inline: true
   },
-  babel: {
-      presets: ['es2015', 'stage-3', 'react']
-  },
   plugins: [
     new webpack.NoErrorsPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.optimize.OccurenceOrderPlugin(),
-    new ExtractTextPlugin('css/[name].css'),
+    new ExtractTextPlugin('util/css/[name].css'),
     new webpack.DefinePlugin({
       __DEBUG__: JSON.stringify(JSON.parse('true')), // 开发调试时把它改为true
     }),
@@ -86,6 +72,7 @@ var webpackConfig = {
     }),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'commons',
+      filename :'util/js/commons.js',
       // TODO: set node_modules fallback
       minChunks: function (module, count) {
         // any required modules inside node_modules are extracted to vendor
