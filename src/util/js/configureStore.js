@@ -1,3 +1,4 @@
+import React from 'react';
 import { createStore, compose ,applyMiddleware} from 'redux';
 import thunk from 'redux-thunk';
 import _DevTools from './DevTools';
@@ -22,7 +23,18 @@ const configureStore = function(reducer) {
   return store;
 }
 
+//空组件
+const nullDevTools = React.createClass({
+  render (){
+    return (
+      <div id="nullDevTools" />
+    )
+  }
+})
+//当发布模式开始，不再渲染Devtolls
+let DevTools = __DEBUG__? _DevTools : nullDevTools;
+
 export {
   configureStore,
-  _DevTools as DevTools
+  DevTools
 }

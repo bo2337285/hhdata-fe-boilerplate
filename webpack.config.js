@@ -61,7 +61,7 @@ var webpackConfig = {
     new webpack.optimize.OccurenceOrderPlugin(),
     new ExtractTextPlugin('util/css/[name].css'),
     new webpack.DefinePlugin({
-      __DEBUG__: JSON.stringify(JSON.parse('true')), // 开发调试时把它改为true
+      __DEBUG__: JSON.stringify(JSON.parse('false')), // 开发调试时把它改为true
     }),
     new HtmlWebpackPlugin({
       title : "Wfp-Basic-Dev-Framework",
