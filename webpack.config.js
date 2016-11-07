@@ -17,6 +17,8 @@ var webpackConfig = {
   entry: {
     // index : SRC_PATH + "/index.js",
     commons: [
+        'eventsource-polyfill',
+        'fetch-ie8',
         'babel-polyfill',
         'react',
         'react-dom'
